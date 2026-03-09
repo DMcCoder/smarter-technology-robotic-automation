@@ -21,7 +21,7 @@ pnpm build
 Run the built CLI:
 
 ```bash
-pnpm cli 100 100 100 20
+pnpm cli --width 100 --height 100 --lenght 100 --mass 20
 ```
 
 Expected output:
@@ -35,7 +35,7 @@ REJECTED
 You can also invoke the compiled file directly:
 
 ```bash
-node dist/cli.js <width> <height> <length> <mass>
+node dist/cli.js -w 100 -h 100 -l 100 -m 20
 ```
 
 ## Bun
@@ -46,5 +46,5 @@ Bun is optional for this repo. If you already have it installed, the same flow w
 bun install
 bun test
 bun run build
-bun dist/cli.js 100 100 100 20
+bun dist/cli.js --width 100 --height 100 --lenght 100 --mass 20
 ```

@@ -24,20 +24,22 @@ function createProgram(dependencies: CliDependencies = { log: console.log }): Co
   program
     .name("smarter-sort")
     .description("Classify a package as STANDARD, SPECIAL, or REJECTED.")
-    .argument("<width>", "package width in centimeters", (value) =>
+    .helpOption("--help", "display help for command")
+    .showHelpAfterError()
+    .requiredOption("-w, --width <width>", "package width in centimeters", (value) =>
       parseNumber(value, "width"),
     )
-    .argument("<height>", "package height in centimeters", (value) =>
+    .requiredOption("-h, --height <height>", "package height in centimeters", (value) =>
       parseNumber(value, "height"),
     )
-    .argument("<length>", "package length in centimeters", (value) =>
+    .requiredOption("-l, --lenght <length>", "package length in centimeters", (value) =>
       parseNumber(value, "length"),
     )
-    .argument("<mass>", "package mass in kilograms", (value) =>
+    .requiredOption("-m, --mass <mass>", "package mass in kilograms", (value) =>
       parseNumber(value, "mass"),
     )
-    .action((width: number, height: number, length: number, mass: number) => {
-      dependencies.log(sort(width, height, length, mass));
+    .action((options: { width: number; height: number; lenght: number; mass: number }) => {
+      dependencies.log(sort(options.width, options.height, options.lenght, options.mass));
     });
 
   return program;

@@ -1,23 +1,48 @@
 # smarter-technology-robotic-automation
 Core Engineering Technical Screen
 
-## Usage
+## Quick Start
 
-Build the project:
+Install dependencies and run the tests:
 
 ```bash
-npm install
-npm run build
+pnpm install
+pnpm test
 ```
 
-Run the CLI:
+Build the CLI:
+
+```bash
+pnpm build
+```
+
+Run the built CLI:
+
+```bash
+pnpm cli 100 100 100 20
+```
+
+Expected output:
+
+```text
+REJECTED
+```
+
+## Direct Usage
+
+You can also invoke the compiled file directly:
 
 ```bash
 node dist/cli.js <width> <height> <length> <mass>
 ```
 
-Example:
+## Bun
+
+Bun is optional for this repo. If you already have it installed, the same flow works:
 
 ```bash
-node dist/cli.js 100 100 100 20
+bun install
+bun test
+bun run build
+bun dist/cli.js 100 100 100 20
 ```

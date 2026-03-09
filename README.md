@@ -38,6 +38,12 @@ You can also invoke the compiled file directly:
 node dist/cli.js -w 100 -h 100 -l 100 -m 20
 ```
 
+Use `--debug` to print the derived package details and runtime before the final stack:
+
+```bash
+node dist/cli.js -w 100 -h 100 -l 100 -m 20 --debug
+```
+
 ## Bun
 
 Bun is optional for this repo. If you already have it installed, the same flow works:

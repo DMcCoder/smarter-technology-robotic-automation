@@ -77,4 +77,40 @@ describe("cli", () => {
 
     expect(log).toHaveBeenCalledWith("SPECIAL");
   });
+
+  it("prints debug details before the final stack when debug is enabled", () => {
+    const log = vi.fn();
+    const program = createProgram({ log });
+
+    program.parse(
+      [
+        "node",
+        "smarter-sort",
+        "--width",
+        "100",
+        "--height",
+        "100",
+        "--lenght",
+        "100",
+        "--mass",
+        "20",
+        "--debug",
+      ],
+      {
+        from: "node",
+      },
+    );
+
+    expect(log).toHaveBeenCalledTimes(4);
+    expect(log).toHaveBeenNthCalledWith(
+      1,
+      "[sort] input width=100 height=100 length=100 mass=20",
+    );
+    expect(log).toHaveBeenNthCalledWith(
+      2,
+      "[sort] volume=1000000 bulky=true heavy=true stack=REJECTED",
+    );
+    expect(log.mock.calls[2]?.[0]).toMatch(/^\[sort\] runtime_ms=\d+\.\d{3}$/);
+    expect(log).toHaveBeenNthCalledWith(4, "REJECTED");
+  });
 });

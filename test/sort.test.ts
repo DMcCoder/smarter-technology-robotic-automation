@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { sort } from "../index";
 
@@ -59,5 +59,26 @@ const CASES: SortCase[] = [
 describe("sort", () => {
   it.each(CASES)("$name", ({ input, expected }) => {
     expect(sort(input.width, input.height, input.length, input.mass)).toBe(expected);
+  });
+
+  it("emits debug details and runtime when debug is enabled", () => {
+    const logger = vi.fn();
+
+    const result = sort(100, 100, 100, 20, {
+      debug: true,
+      logger,
+      now: vi.fn().mockReturnValueOnce(10).mockReturnValueOnce(12.5),
+    });
+
+    expect(result).toBe("REJECTED");
+    expect(logger).toHaveBeenNthCalledWith(
+      1,
+      "[sort] input width=100 height=100 length=100 mass=20",
+    );
+    expect(logger).toHaveBeenNthCalledWith(
+      2,
+      "[sort] volume=1000000 bulky=true heavy=true stack=REJECTED",
+    );
+    expect(logger).toHaveBeenNthCalledWith(3, "[sort] runtime_ms=2.500");
   });
 });

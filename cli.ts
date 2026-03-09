@@ -38,9 +38,23 @@ function createProgram(dependencies: CliDependencies = { log: console.log }): Co
     .requiredOption("-m, --mass <mass>", "package mass in kilograms", (value) =>
       parseNumber(value, "mass"),
     )
-    .action((options: { width: number; height: number; lenght: number; mass: number }) => {
-      dependencies.log(sort(options.width, options.height, options.lenght, options.mass));
-    });
+    .option("-d, --debug", "print package classification details and runtime")
+    .action(
+      (options: {
+        width: number;
+        height: number;
+        lenght: number;
+        mass: number;
+        debug?: boolean;
+      }) => {
+        dependencies.log(
+          sort(options.width, options.height, options.lenght, options.mass, {
+            debug: options.debug,
+            logger: dependencies.log,
+          }),
+        );
+      },
+    );
 
   return program;
 }

@@ -12,6 +12,14 @@ pnpm test
 
 `pnpm test` runs the deterministic unit and CLI tests. Use `pnpm run test:fuzz` to execute the Faker-based randomized coverage 10 times, or `pnpm run test:once` to run the full Vitest suite once.
 
+Generate code coverage with:
+
+```bash
+pnpm run coverage
+```
+
+This writes an HTML report to `coverage/` and prints a text summary in the terminal.
+
 Build the CLI:
 
 ```bash

@@ -12,6 +12,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "cli": "node dist/cli.js",
+    "coverage": "vitest run --coverage test/cli.test.ts test/sort.test.ts",
     "release": "./scripts/build-release-binaries.mjs",
     "test": "vitest run test/cli.test.ts test/sort.test.ts",
     "test:fuzz": "node scripts/run-fuzz-tests.mjs",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@types/node": "^24.6.1",
     "@faker-js/faker": "^9.8.0",
+    "@vitest/coverage-v8": "^3.2.4",
     "commander": "^14.0.1",
     "typescript": "^5.8.2",
     "vitest": "^3.2.4"

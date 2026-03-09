@@ -139,5 +139,6 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 .codex
-.devcontainer
 .pnpm-store
+.DS_Store
+release

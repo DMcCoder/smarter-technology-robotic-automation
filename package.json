@@ -2,11 +2,15 @@
   "name": "smarter-technology-robotic-automation",
   "version": "1.0.0",
   "description": "Core Engineering Technical Screen",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "test": "vitest run"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "typescript": "^5.8.2",
     "vitest": "^3.2.4"
   },
   "repository": {
@@ -16,7 +20,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/DMcCoder/smarter-technology-robotic-automation/issues"
   },

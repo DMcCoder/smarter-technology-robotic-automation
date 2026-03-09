@@ -10,6 +10,7 @@ const tempBuildDir = join(tmpdir(), `smarter-release-build-${Date.now()}`);
 const tempReleaseDir = join(tempBuildDir, "release");
 
 const targets = [
+  { target: "bun-linux-x64", outfile: "smarter-sort-linux-x64" },
   { target: "bun-darwin-x64", outfile: "smarter-sort-darwin-x64" },
   { target: "bun-darwin-arm64", outfile: "smarter-sort-darwin-arm64" },
   { target: "bun-windows-x64", outfile: "smarter-sort-windows-x64.exe" },

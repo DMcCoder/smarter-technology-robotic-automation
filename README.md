@@ -72,6 +72,7 @@ bun run release
 That command creates these files in `release/`:
 
 ```text
+release/smarter-sort-linux-x64
 release/smarter-sort-darwin-arm64
 release/smarter-sort-darwin-x64
 release/smarter-sort-windows-x64.exe

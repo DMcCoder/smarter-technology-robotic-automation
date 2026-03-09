@@ -10,7 +10,7 @@ pnpm install
 pnpm test
 ```
 
-`pnpm test` executes the Vitest suite 10 times so each run exercises new Faker-generated cases. Use `pnpm run test:once` for a single pass.
+`pnpm test` runs the deterministic unit and CLI tests. Use `pnpm run test:fuzz` to execute the Faker-based randomized coverage 10 times, or `pnpm run test:once` to run the full Vitest suite once.
 
 Build the CLI:
 

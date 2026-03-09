@@ -1,126 +1,63 @@
-import { faker } from "@faker-js/faker";
 import { describe, expect, it } from "vitest";
 
-import { sort, type Stack } from "../index";
+import { sort } from "../index";
 
-const BULKY_VOLUME_THRESHOLD = 1_000_000;
-const BULKY_DIMENSION_THRESHOLD = 150;
-const SAMPLE_SIZE = 25;
-
-type Package = {
-  width: number;
-  height: number;
-  length: number;
-  mass: number;
+type SortCase = {
+  name: string;
+  input: {
+    width: number;
+    height: number;
+    length: number;
+    mass: number;
+  };
+  expected: "STANDARD" | "SPECIAL" | "REJECTED";
 };
 
-function randomFloat(min: number, max: number, precision = 2): number {
-  return faker.number.float({
-    min,
-    max,
-    fractionDigits: precision,
-  });
-}
-
-function randomDimension(max = 149): number {
-  return faker.number.int({ min: 1, max });
-}
-
-function createStandardPackage(): Package {
-  return {
-    width: randomDimension(99),
-    height: randomDimension(99),
-    length: randomDimension(99),
-    mass: randomFloat(0.1, 19.99),
-  };
-}
-
-function createHeavyOnlyPackage(): Package {
-  return {
-    width: randomDimension(99),
-    height: randomDimension(99),
-    length: randomDimension(99),
-    mass: randomFloat(20, 100),
-  };
-}
-
-function createBulkyByVolumeOnlyPackage(): Package {
-  const base = faker.number.int({ min: 100, max: 149 });
-
-  return {
-    width: base,
-    height: base,
-    length: faker.number.int({
-      min: Math.ceil(BULKY_VOLUME_THRESHOLD / (base * base)),
-      max: 149,
-    }),
-    mass: randomFloat(0.1, 19.99),
-  };
-}
-
-function createBulkyByDimensionOnlyPackage(): Package {
-  return {
-    width: faker.number.int({ min: BULKY_DIMENSION_THRESHOLD, max: 300 }),
-    height: randomDimension(80),
-    length: randomDimension(80),
-    mass: randomFloat(0.1, 19.99),
-  };
-}
-
-function createRejectedPackage(): Package {
-  return {
-    width: faker.number.int({ min: BULKY_DIMENSION_THRESHOLD, max: 300 }),
-    height: randomDimension(100),
-    length: randomDimension(100),
-    mass: randomFloat(20, 100),
-  };
-}
-
-function assertSortResult(createPackage: () => Package, expectedStack: Stack): void {
-  for (let index = 0; index < SAMPLE_SIZE; index += 1) {
-    const { width, height, length, mass } = createPackage();
-    expect(sort(width, height, length, mass)).toBe(expectedStack);
-  }
-}
+const CASES: SortCase[] = [
+  {
+    name: "returns STANDARD for a package below all thresholds",
+    input: { width: 10, height: 20, length: 30, mass: 5 },
+    expected: "STANDARD",
+  },
+  {
+    name: "returns SPECIAL for a heavy package below bulky thresholds",
+    input: { width: 10, height: 20, length: 30, mass: 20 },
+    expected: "SPECIAL",
+  },
+  {
+    name: "returns SPECIAL for a package bulky by volume only",
+    input: { width: 100, height: 100, length: 100, mass: 19.9 },
+    expected: "SPECIAL",
+  },
+  {
+    name: "returns SPECIAL for a package bulky by a single dimension only",
+    input: { width: 150, height: 10, length: 10, mass: 5 },
+    expected: "SPECIAL",
+  },
+  {
+    name: "returns REJECTED for a package that is both bulky and heavy",
+    input: { width: 100, height: 100, length: 100, mass: 20 },
+    expected: "REJECTED",
+  },
+  {
+    name: "treats the volume threshold as inclusive",
+    input: { width: 100, height: 100, length: 100, mass: 19 },
+    expected: "SPECIAL",
+  },
+  {
+    name: "treats the mass threshold as inclusive",
+    input: { width: 100, height: 100, length: 99, mass: 20 },
+    expected: "SPECIAL",
+  },
+  {
+    name: "treats the dimension threshold as inclusive",
+    input: { width: 150, height: 149, length: 149, mass: 20 },
+    expected: "REJECTED",
+  },
+];
 
 describe("sort", () => {
-  describe("STANDARD", () => {
-    it("returns packages that are neither bulky nor heavy", () => {
-      assertSortResult(createStandardPackage, "STANDARD");
-    });
-  });
-
-  describe("SPECIAL", () => {
-    it("returns packages that are heavy only", () => {
-      assertSortResult(createHeavyOnlyPackage, "SPECIAL");
-    });
-
-    it("returns packages that are bulky by volume only", () => {
-      assertSortResult(createBulkyByVolumeOnlyPackage, "SPECIAL");
-    });
-
-    it("returns packages that are bulky by a single dimension", () => {
-      assertSortResult(createBulkyByDimensionOnlyPackage, "SPECIAL");
-    });
-  });
-
-  describe("REJECTED", () => {
-    it("returns packages that are both bulky and heavy", () => {
-      assertSortResult(createRejectedPackage, "REJECTED");
-    });
-  });
-
-  describe("threshold boundaries", () => {
-    it("treats the volume threshold as inclusive", () => {
-      expect(sort(100, 100, 100, 19)).toBe("SPECIAL");
-    });
-
-    it("treats the mass threshold as inclusive", () => {
-      expect(sort(100, 100, 99, 20)).toBe("SPECIAL");
-    });
-
-    it("treats the dimension threshold as inclusive", () => {
-      expect(sort(150, 149, 149, 20)).toBe("REJECTED");
-    });
+  it.each(CASES)("$name", ({ input, expected }) => {
+    expect(sort(input.width, input.height, input.length, input.mass)).toBe(expected);
   });
 });

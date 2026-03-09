@@ -1,0 +1,10 @@
+{
+  "name": "Smart Technology Robotic Automation DevContainer",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node",
+  "containerEnv": {
+   "CODEX_HOME": "/workspaces/smarter-technology-robotic-automation/.codex"
+  },
+    "features": {
+     "ghcr.io/jsburckhardt/devcontainer-features/codex:1": {}
+  }
+}

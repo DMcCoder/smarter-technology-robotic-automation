@@ -12,6 +12,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "cli": "node dist/cli.js",
+    "release": "./scripts/build-release-binaries.mjs",
     "test": "vitest run test/cli.test.ts test/sort.test.ts",
     "test:fuzz": "node scripts/run-fuzz-tests.mjs",
     "test:once": "vitest run"

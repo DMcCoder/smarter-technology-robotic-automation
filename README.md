@@ -46,11 +46,39 @@ node dist/cli.js -w 100 -h 100 -l 100 -m 20 --debug
 
 ## Bun
 
-Bun is optional for this repo. If you already have it installed, the same flow works:
+Bun is the simplest way to create standalone release binaries for this CLI.
+
+Install Bun, then install dependencies:
 
 ```bash
+curl -fsSL https://bun.com/install | bash
+source ~/.bashrc
 bun install
+```
+
+Run the tests and build the TypeScript output:
+
+```bash
 bun test
 bun run build
+```
+
+Create the release binaries:
+
+```bash
+bun run release
+```
+
+That command creates these files in `release/`:
+
+```text
+release/smarter-sort-darwin-arm64
+release/smarter-sort-darwin-x64
+release/smarter-sort-windows-x64.exe
+```
+
+You can still run the CLI directly with Bun during development:
+
+```bash
 bun dist/cli.js --width 100 --height 100 --lenght 100 --mass 20
 ```

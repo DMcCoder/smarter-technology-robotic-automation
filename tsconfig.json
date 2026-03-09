@@ -7,9 +7,10 @@
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
+    "types": ["node", "vitest/globals"],
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["index.ts"],
+  "include": ["cli.ts", "index.ts"],
   "exclude": ["dist", "node_modules", "test"]
 }

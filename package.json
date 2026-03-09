@@ -4,7 +4,10 @@
   "description": "Core Engineering Technical Screen",
   "main": "index.js",
   "scripts": {
-    "test": "node --test"
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
   },
   "repository": {
     "type": "git",

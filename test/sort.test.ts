@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { sort, type Stack } from "../index";
 
@@ -84,10 +84,6 @@ function assertSortResult(createPackage: () => Package, expectedStack: Stack): v
 }
 
 describe("sort", () => {
-  beforeEach(() => {
-    faker.seed(20260309);
-  });
-
   describe("STANDARD", () => {
     it("returns packages that are neither bulky nor heavy", () => {
       assertSortResult(createStandardPackage, "STANDARD");

@@ -10,6 +10,8 @@ pnpm install
 pnpm test
 ```
 
+`pnpm test` executes the Vitest suite 10 times so each run exercises new Faker-generated cases. Use `pnpm run test:once` for a single pass.
+
 Build the CLI:
 
 ```bash
